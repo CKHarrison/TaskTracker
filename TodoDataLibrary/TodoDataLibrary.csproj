@@ -12,8 +12,4 @@
     <PackageReference Include="Npgsql" Version="6.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Database\" />
-  </ItemGroup>
-
 </Project>
