@@ -1,7 +1,12 @@
+using TodoDataLibrary.Data;
+using TodoDataLibrary.Database;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddTransient<IDatabaseData, SqlData>();
+builder.Services.AddTransient<ISqlDataAccess, PgSqlDataAccess>();
 
 var app = builder.Build();
 
