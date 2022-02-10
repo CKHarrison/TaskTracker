@@ -9,7 +9,7 @@ namespace Todo.Web.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IDatabaseData _db;
-        private List<BasicTodoModel> Todos;
+        public List<BasicTodoModel> Todos;
 
         public IndexModel(ILogger<IndexModel> logger, IDatabaseData db)
         {
