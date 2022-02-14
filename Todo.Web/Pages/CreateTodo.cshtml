@@ -1,0 +1,32 @@
+﻿@page
+@model Todo.Web.Pages.CreateTodoModel
+@{
+    ViewData["Title"] = "Create Todo";
+}
+<div class="text-center">
+    <h1>Create Todo</h1>
+    <form method="post">
+       <div class="form-group">
+            <label asp-for="@Model.Todo.Title" class="form-label"></label>
+            <input  asp-for="@Model.Todo.Title" class="form-control"/>
+       </div>
+       <div class="form-group">
+           <label asp-for="@Model.Todo.Description" class="form-label"></label>
+           <textarea asp-for="@Model.Todo.Description" class="form-control"></textarea>
+       </div>
+       <div class="form-group">
+           <label asp-for="@Model.Todo.Categories" class="form-label"></label>
+           <input asp-for="@Model.Todo.Categories" class="form-control" 
+           placeholder="Please enter comma seperated list of categories" value=""/>
+       </div>
+       <div class="form-group">
+           <label asp-for="@Model.Todo.StartDate" class="form-label"></label>
+           <input asp-for="@Model.Todo.StartDate" class="form-control"/>
+       </div>
+       <div class="form-group">
+           <label asp-for="@Model.Todo.EndDate" class="form-label"></label>
+           <input asp-for="@Model.Todo.EndDate" class="form-control"/>
+       </div>
+       <button type="submit" class="btn btn-primary mt-3 p-3">Create Todo</button>
+    </form>
+</div>
