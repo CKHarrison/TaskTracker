@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IDatabaseData, SqlData>();
 builder.Services.AddTransient<ISqlDataAccess, PgSqlDataAccess>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
