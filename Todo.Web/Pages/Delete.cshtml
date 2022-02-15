@@ -1,0 +1,15 @@
+﻿@page
+@model Todo.Web.Pages.DeleteModel
+@{
+    ViewData["Title"] = $"Delete {@Model.Todo.Title}";
+}
+<div class="text-center">
+    <h1>Are you sure you want to delete @Model.Todo.Title?</h1>
+    <form method="post">
+        <input asp-for="Todo.Id" value="@Model.Todo.Id" type="hidden"/>
+        <div class="form-group">
+            <a asp-page="./Index" class="btn btn-primary">Back to To Do List</a>
+            <button type="submit"  class="btn btn-danger">Delete Todo</button>
+        </div>
+    </form>
+</div>
