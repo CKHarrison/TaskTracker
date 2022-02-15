@@ -69,24 +69,39 @@ namespace TodoDataLibrary.Data
             // Need to update the categories
             foreach (var category in categories)
             {
+                // need to fix bug where moving from 2 categories to  1 category, still leaves deleted category attached.
                 sql = "select Id from categories where Name = @Name;";
-                int categoryId = _db.LoadData<IdLookupModel, dynamic>(sql, new { Name = category.Name }, connectionString).First().Id;
-
-                sql = "select Id, TodoId, CategoryId from todoCategories where CategoryId = @CategoryId;";
-                var links = _db.LoadData<CategoryModel, dynamic>(sql, new { CategoryId = categoryId }, connectionString);
-
-                if(links.Count == 1)
+                int? categoryId;
+                
+                try
                 {
-                    sql = "Update categories set Name = @Name Where Id = @Id;";
-                    _db.SaveData(sql, new {Id = links[0].Id}, connectionString);
+                    categoryId = _db.LoadData<IdLookupModel, dynamic>(sql, new { Name = category.Name }, connectionString).First().Id;
+                } catch (InvalidOperationException)
+                {
+                    categoryId= null;
                 }
+
+                if (categoryId != null)
+                {
+
+                    sql = "select Id, TodoId, CategoryId from todoCategories where CategoryId = @CategoryId;";
+                    var links = _db.LoadData<CategoryModel, dynamic>(sql, new { CategoryId = categoryId }, connectionString);
+
+                    if (links.Count == 1)
+                    {
+                        sql = "Update categories set Name = @Name Where Id = @Id;";
+                        _db.SaveData(sql, new { Id = links[0].Id, Name = category.Name }, connectionString);
+                    }
+                }
+
                 else
                 {
                     sql = "insert into categories(Name) values(@Name);";
-                    _db.SaveData(sql, new {Name = category.Name}, connectionString);
+                    _db.SaveData(sql, new { Name = category.Name }, connectionString);
+                    sql = "select Id from categories where Name=@Name;";
                     categoryId = _db.LoadData<IdLookupModel, dynamic>(sql, new { Name = category.Name }, connectionString).First().Id;
                     sql = "insert into todoCategories(TodoId, CategoryId) values(@TodoId, @CategoryId);";
-                    _db.SaveData(sql, new {TodoId = id, CategoryId = categoryId}, connectionString);
+                    _db.SaveData(sql, new { TodoId = id, CategoryId = categoryId }, connectionString);
                 }
             }
         }
@@ -94,12 +109,12 @@ namespace TodoDataLibrary.Data
         public void DeleteTodo(int todoId, int categoryId)
         {
             string sql = "select Id, TodoId, CategoryId from todoCategories where CategoryId = @CategoryId;";
-            var links = _db.LoadData<CategoryModel, dynamic>(sql, new {CategoryId = categoryId}, connectionString);
+            var links = _db.LoadData<CategoryModel, dynamic>(sql, new { CategoryId = categoryId }, connectionString);
 
             sql = "delete from todoCategories where CategoryId = @CategoryId and TodoId=@TodoId;";
             _db.SaveData(sql, new { CategoryId = categoryId, TodoId = todoId }, connectionString);
 
-            if(links.Count == 1)
+            if (links.Count == 1)
             {
                 sql = "delete from categories where id = Id;";
                 _db.SaveData(sql, new { Id = categoryId }, connectionString);

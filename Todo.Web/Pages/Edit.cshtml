@@ -1,0 +1,46 @@
+﻿@page
+@model Todo.Web.Pages.EditModel
+@{
+    ViewData["Title"] = "Edit Todo";
+}
+<div class="text-center">
+    <h1>@Model.Todo.Title</h1>
+    <div class="text-center">
+    <h1>Create Todo</h1>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="Todo.Id" value="@Model.Todo.Id" type="hidden"/>
+       <div class="form-group">
+            <label asp-for="@Model.Todo.Title" class="form-label"></label>
+            <input  asp-for="@Model.Todo.Title" class="form-control" value="@Model.Todo.Title"/>
+            <span asp-validation-for="@Model.Todo.Title" class="text-danger"></span>
+       </div>
+       <div class="form-group">
+           <label asp-for="@Model.Todo.Description" class="form-label"></label>
+           <textarea asp-for="@Model.Todo.Description" class="form-control"></textarea>
+           <span asp-validation-for="@Model.Todo.Description" class="text-danger"></span>
+       </div>
+       <div class="form-group">
+           <label asp-for="@Model.Category" class="form-label">Categories: Please separate categories with a comma</label>
+           <input asp-for="@Model.Category.Name" class="form-control" 
+           placeholder="Please enter comma seperated list of categories" value="@Model.Category.Name"/>
+           <span asp-validation-for="@Model.Category.Name" class="text-danger"></span>
+       </div>
+       <div class="form-group">
+           <label asp-for="@Model.Todo.StartDate" class="form-label"></label>
+           <input asp-for="@Model.Todo.StartDate" class="form-control"/>
+           <span asp-validation-for="@Model.Todo.StartDate" class="text-danger"></span>
+       </div>
+       <div class="form-group">
+           <label asp-for="@Model.Todo.EndDate" class="form-label"></label>
+           <input asp-for="@Model.Todo.EndDate" class="form-control"/>
+           <span asp-validation-for="@Model.Todo.EndDate" class="text-danger"></span>
+       </div>
+       <a asp-page="./Index" class="btn btn-primary mt-3 p-3">Back to Todo List</a>
+       <button type="submit" class="btn btn-info mt-3 p-3">Update Todo</button>
+    </form>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</div>
