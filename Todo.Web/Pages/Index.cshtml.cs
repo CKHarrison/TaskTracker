@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Todo.Web.ViewModels;
 using TodoDataLibrary.Data;
 using TodoDataLibrary.Models;
 
@@ -9,17 +11,19 @@ namespace Todo.Web.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IDatabaseData _db;
-        public List<BasicTodoModel> Todos;
+        private readonly IMapper _mapper;
+        public List<BasicTodoViewModel> Todos;
 
-        public IndexModel(ILogger<IndexModel> logger, IDatabaseData db)
+        public IndexModel(ILogger<IndexModel> logger, IDatabaseData db, IMapper mapper)
         {
             _logger = logger;
             _db = db;
+            _mapper = mapper;
         }
 
         public void OnGet()
         {
-            Todos = _db.GetAllTodos();
+            Todos = _mapper.Map<List<BasicTodoViewModel>>(_db.GetAllTodos());
         }
     }
 }
