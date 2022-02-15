@@ -8,7 +8,7 @@ namespace Todo.Web
     {
         public CategoryProfile()
         {
-            CreateMap<CategoryViewModel, CategoryModel>();
+            CreateMap<CategoryViewModel, CategoryModel>().ReverseMap();
         }
     }
 }

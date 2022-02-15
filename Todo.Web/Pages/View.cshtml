@@ -1,0 +1,56 @@
+﻿@page
+@model Todo.Web.Pages.ViewModel
+@{
+    ViewData["Title"] = "View Todo";
+}
+<div class="container">
+
+    <h1>Todo: @Model.Todo.Title</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Categories</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Todo.Title</td>
+
+
+                <td>@Model.Todo.Description</td>
+
+
+                <td>@Model.Todo.StartDate</td>
+
+
+                <td>@Model.Todo.EndDate</td>
+
+
+                <td>
+                    @{
+                        int total = 0;
+                        @foreach (var category in Model.Todo.Categories)
+                        {
+                            total++;
+                            if (total == Model.Todo.Categories.Count)
+                            {
+                                @category.Name;
+                            }
+                            else
+                            {
+                                @(category.Name + ", ")
+
+                            }
+                        }
+                    }
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+</div>
