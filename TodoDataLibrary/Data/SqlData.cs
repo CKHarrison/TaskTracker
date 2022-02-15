@@ -137,6 +137,26 @@ namespace TodoDataLibrary.Data
             return _db.LoadData<CategoryModel, dynamic>(sql, new { }, connectionString);
         }
 
+        public CategoryModel GetCategory(int id)
+        {
+            string sql = @"select Id, Name
+                            from categories
+                            where Id = Id;";
+            var output = _db.LoadData<CategoryModel, dynamic>(sql, new { Id = id }, connectionString).First();
+            return output;
+        }
+
+        public List<BasicTodoModel> GetTodoByCategory(int categoryId)
+        {
+            string sql = @"select t.Id, t.Title, T.Description, t.StartDate, t.EndDate, c.Name
+                        from Categories c
+                        inner join todoCategories tc on c.Id = tc.CategoryId
+                        inner join Todos t on tc.TodoId = t.Id
+                        where c.id = @CategoryId;";
+            var output = _db.LoadData<BasicTodoModel, dynamic>(sql, new { CategoryId = categoryId }, connectionString);
+            return output;
+        }
+
         private void CreateCategory(List<CategoryModel> categories, int todoId)
         {
             foreach (var category in categories)

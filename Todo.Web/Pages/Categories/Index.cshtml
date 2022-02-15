@@ -1,0 +1,17 @@
+﻿@page
+@model Todo.Web.Pages.Categories.IndexModel
+@{
+    ViewData["title"] = "All Categories";
+}
+<div class="container">
+    <div class="row text-center">
+        <div class='col-sm-12'>
+
+            @foreach (var category in @Model.Categories)
+            {
+                <a asp-page="./Category" asp-route-Id="@category.Id" class="btn btn-secondary">@category.Name</a>
+            }
+        </div>
+
+    </div>
+</div>

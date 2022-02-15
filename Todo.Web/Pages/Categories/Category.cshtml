@@ -1,0 +1,37 @@
+﻿@page
+@model Todo.Web.Pages.Categories.CategoryModel
+@{
+    ViewData["Title"] = "Category";
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var todo in @Model.Todos)
+        {
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@todo.Title</h5>
+                        <p class="card-text">
+                            @if (@todo.Description.Length > 51)
+                            {
+                                @todo.Description.Substring(0, 50)
+                                ;
+
+                            }
+                            else
+                            {
+                                @todo.Description
+                                ;
+                            }
+                        </p>
+                        @*add in categories*@
+                        <a asp-page="../View" asp-route-Id="@todo.Id" class="btn btn-primary"><i class="bi bi-info-circle"></i> View</a>
+                        <a asp-page="../Edit" asp-route-Id="@todo.Id" class="btn btn-secondary"><i class="bi bi-pencil-square"></i> Edit</a>
+                        <a asp-page="../Delete" asp-route-Id="@todo.Id" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -13,9 +13,9 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">@todo.Title</h5>
                         <p class="card-text">
-                            @if(@todo.Description.Length > 100)
+                            @if(@todo.Description.Length > 51)
                             {
-                                @todo.Description.Substring(0, 100);
+                                @todo.Description.Substring(0, 50);
                                 
                             } else
                             {
