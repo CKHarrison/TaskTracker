@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Todo.Web.ViewModels;
@@ -7,6 +8,7 @@ using TodoDataLibrary.Models;
 
 namespace Todo.Web.Pages
 {
+    //[Authorize]
     public class CreateTodoModel : PageModel
     {
         private readonly IDatabaseData _db;
@@ -39,6 +41,10 @@ namespace Todo.Web.Pages
             {
                 var CategoryModel = _mapper.Map<CategoryModel>(category);
                 ProcessedCategories.Add(CategoryModel);
+            }
+            if(Todo.EndDate < Todo.StartDate)
+            {
+                ModelState.AddModelError("Invalid End Date", "End Date cannot be before Start Date");
             }
             
             if(ModelState.IsValid == false)

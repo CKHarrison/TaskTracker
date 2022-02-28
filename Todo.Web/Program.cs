@@ -1,8 +1,15 @@
 using TodoDataLibrary.Data;
 using TodoDataLibrary.Database;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Todo.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var connectionString = builder.Configuration.GetConnectionString("PgSqlDb"); 
+builder.Services.AddDbContext<TodoDbContext>(options =>
+     options.UseNpgsql(connectionString)); 
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+      .AddEntityFrameworkStores<TodoDbContext>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IDatabaseData, SqlData>();
@@ -23,7 +30,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

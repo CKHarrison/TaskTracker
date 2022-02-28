@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Todo.Web.ViewModels;
@@ -6,6 +7,7 @@ using TodoDataLibrary.Data;
 
 namespace Todo.Web.Pages.Categories
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IDatabaseData _db;
