@@ -8,7 +8,7 @@ using TodoDataLibrary.Models;
 
 namespace Todo.Web.Pages
 {
-    //[Authorize]
+    [Authorize]
     public class CreateTodoModel : PageModel
     {
         private readonly IDatabaseData _db;

@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Todo.Web.ViewModels;
@@ -7,6 +8,7 @@ using TodoDataLibrary.Models;
 
 namespace Todo.Web.Pages
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly IDatabaseData _db;

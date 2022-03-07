@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Todo.Web.Data;
 
-public class TodoDbContext : IdentityDbContext<IdentityUser>
+public class TodoDbContext : IdentityDbContext
 {
     public TodoDbContext(DbContextOptions<TodoDbContext> options)
         : base(options)
