@@ -49,7 +49,7 @@ namespace Todo.Web.Utilities
         public static string GetConnectionString(IConfiguration _config)
         {
             var connectionString = _config.GetConnectionString("PgSqlDb");
-            var databaseUrl = Environment.GetEnvironmentVariable("PgSqlDb");
+            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             return string.IsNullOrEmpty(databaseUrl) ? connectionString : GetDatabase(databaseUrl);
         }
         public static string GetDatabase(string databaseUrl)
