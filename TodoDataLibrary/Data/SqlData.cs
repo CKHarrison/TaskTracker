@@ -5,17 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using TodoDataLibrary.Database;
 using TodoDataLibrary.Models;
+using TodoDataLibrary.Utilities;
 
 namespace TodoDataLibrary.Data
 {
     public class SqlData : IDatabaseData
     {
         private readonly ISqlDataAccess _db;
-        private readonly string connectionString = "PgSqlDb";
+        private readonly string connectionString = string.Empty;
 
         public SqlData(ISqlDataAccess db)
         {
             _db = db;
+            connectionString = ConnectionStringUtil.GetConnectionString();
         }
 
         public List<BasicTodoModel> GetAllTodos()

@@ -48,30 +48,29 @@ namespace Todo.Web.Utilities
         }
         public static string GetConnectionString(IConfiguration _config)
         {
-            var localConnectionString = _config.GetConnectionString("PgSqlDb");
-            var prodConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
-          
-            return string.IsNullOrEmpty(prodConnectionString) ? localConnectionString : prodConnectionString;
+            var connectionString = _config.GetConnectionString("PgSqlDb");
+            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            return string.IsNullOrEmpty(databaseUrl) ? connectionString : GetDatabase(databaseUrl);
         }
-        //public static string GetDatabase(string databaseUrl)
-        //{
-        //    //IDictionary evVars = Environment.GetEnvironmentVariables();
-        //    //string output = Environment.GetEnvironmentVariable("PgSqlDb");
+        public static string GetDatabase(string databaseUrl)
+        {
+            //IDictionary evVars = Environment.GetEnvironmentVariables();
+            //string output = Environment.GetEnvironmentVariable("PgSqlDb");
 
-        //    //var database = new Uri(databaseUrl);
-        //    //var userInfo = database.UserInfo.Split(':');
+            var database = new Uri(databaseUrl);
+            var userInfo = database.UserInfo.Split(':');
 
-        //    //var builder = new NpgsqlConnectionStringBuilder
-        //    //{
-        //    //    Host = database.Host,
-        //    //    Port = database.Port,
-        //    //    Username = userInfo[0],
-        //    //    Password = userInfo[1],
-        //    //    Database = database.LocalPath.Trim('/'),
-        //    //    TrustServerCertificate = true
-        //    //};
-        //    //return builder.ToString();
+            var builder = new NpgsqlConnectionStringBuilder
+            {
+                Host = database.Host,
+                Port = database.Port,
+                Username = userInfo[0],
+                Password = userInfo[1],
+                Database = database.LocalPath.Trim('/'),
+                TrustServerCertificate = true
+            };
+            return builder.ToString();
 
-        //}
+        }
     }
 }
