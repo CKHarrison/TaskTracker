@@ -67,7 +67,6 @@ namespace Todo.Web.Utilities
                 Username = userInfo[0],
                 Password = userInfo[1],
                 Database = database.LocalPath.Trim('/'),
-                SslMode = SslMode.Prefer,
                 TrustServerCertificate = true
             };
             return builder.ToString();
