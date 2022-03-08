@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TodoDataLibrary.Utilities;
 
 namespace TodoDataLibrary.Database
 {
@@ -24,7 +25,7 @@ namespace TodoDataLibrary.Database
                                      string connectionStringName,
                                      bool isStoredProcedure = false)
         {
-            string connectionString = _config.GetConnectionString(connectionStringName);
+            string connectionString = ConnectionStringUtil.GetConnectionString();
             CommandType command = CommandType.Text;
             if (isStoredProcedure == true)
             {
@@ -38,7 +39,7 @@ namespace TodoDataLibrary.Database
 
         public void SaveData<T>(string sqlStatement, T parameters, string connectionStringName, bool isStoredProcedure = false)
         {
-            string connectionString = _config.GetConnectionString(connectionStringName);
+            string connectionString = ConnectionStringUtil.GetConnectionString();
             CommandType command = CommandType.Text;
             if (isStoredProcedure == true)
             {
