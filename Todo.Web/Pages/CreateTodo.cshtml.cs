@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Todo.Web.ViewModels;
@@ -13,6 +14,9 @@ namespace Todo.Web.Pages
     {
         private readonly IDatabaseData _db;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public string UserId { get; set; }
 
         [BindProperty]
         public TodoViewModel Todo { get; set; } = new TodoViewModel();
@@ -21,10 +25,11 @@ namespace Todo.Web.Pages
         public List<CategoryViewModel> InitialCategories { get; set; } = new List<CategoryViewModel>();
         public List<CategoryModel> ProcessedCategories { get; set; } = new List<CategoryModel>();
 
-        public CreateTodoModel(IDatabaseData db, IMapper mapper)
+        public CreateTodoModel(IDatabaseData db, IMapper mapper, UserManager<IdentityUser> userManager)
         {
             _db = db;
             _mapper = mapper;
+            _userManager = userManager;
         }
         public void OnGet()
         {
@@ -52,8 +57,8 @@ namespace Todo.Web.Pages
                 return Page();
             } else
             {
-
-                _db.CreateTodo(Todo.Title, Todo.Description, Todo.StartDate, Todo.EndDate, ProcessedCategories);
+                UserId = _userManager.GetUserId(User);
+                _db.CreateTodo(Todo.Title, Todo.Description, Todo.StartDate, Todo.EndDate, ProcessedCategories, UserId);
                 return RedirectToPage("/Index");
             }
         }

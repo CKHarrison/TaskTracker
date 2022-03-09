@@ -26,6 +26,16 @@ namespace TodoDataLibrary.Data
             return _db.LoadData<BasicTodoModel, dynamic>(sql, new { }, connectionString);
         }
 
+        public List<BasicTodoModel>GetAllUserTodos(string userId)
+        {
+            string sql = @"select t.* from todos t
+                inner join usertodos ut on ut.todoid = t.id
+                inner join ""AspNetUsers"" u on u.""Id"" = ut.userid
+                where u.""Id"" = @Id;";
+            var output = _db.LoadData<BasicTodoModel, dynamic>(sql, new { Id = userId }, connectionString);
+            return output;
+        }
+
         public FullTodoModel GetTodo(int id)
         {
             FullTodoModel todo = new FullTodoModel();
@@ -48,7 +58,7 @@ namespace TodoDataLibrary.Data
             return todo;
         }
 
-        public void CreateTodo(string title, string description, DateTime startDate, DateTime endDate, List<CategoryModel> categories)
+        public void CreateTodo(string title, string description, DateTime startDate, DateTime endDate, List<CategoryModel> categories, string userId)
         {
             string sql = @"insert into Todos(Title, Description, StartDate, EndDate)
                            values(@Title, @Description, @StartDate, @EndDate);";
@@ -60,6 +70,10 @@ namespace TodoDataLibrary.Data
                                                               new { Title = title, Description = description, StartDate = startDate, EndDate = endDate },
                                                               connectionString).First().Id;
             CreateCategory(categories, todoId);
+            // connect todos to users
+            sql = @"insert into usertodos(UserId, TodoId)
+                    values (@UserId, @TodoId);";
+            _db.SaveData(sql, new { UserId = userId, TodoId = todoId }, connectionString);
         }
 
         public void UpdateTodo(int id, string title, string description, DateTime startDate, DateTime endDate, List<CategoryModel> categories)
@@ -109,7 +123,7 @@ namespace TodoDataLibrary.Data
             }
         }
 
-        public void DeleteTodo(FullTodoModel todo)
+        public void DeleteTodo(FullTodoModel todo, string userId)
         {
             string sql = "";
             foreach (var category in todo.Categories)
@@ -127,6 +141,11 @@ namespace TodoDataLibrary.Data
                     _db.SaveData(sql, new { Id = category.Id }, connectionString);
                 }
             }
+
+            sql = @"delete
+                    from usertodos
+                    where userid = @UserId and todoid = @TodoId;";
+            _db.SaveData(sql, new {UserId = userId, TodoId = todo.BasicInfo.Id}, connectionString);
 
             sql = "delete from Todos where Id = @Id;";
             _db.SaveData(sql, new { Id = todo.BasicInfo.Id }, connectionString);

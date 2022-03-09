@@ -11,7 +11,7 @@ namespace TodoDataLibrary.Utilities
     {
         public static string GetConnectionString()
         {
-            var localConnectionString = "PgSqlDb";
+            var localConnectionString = "Server = 127.0.0.1; Port = 5432; Database = TodoAppDB; User Id = postgres; Password = password;";
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             return string.IsNullOrEmpty(databaseUrl) ? localConnectionString : GetDatabase(databaseUrl);
         }

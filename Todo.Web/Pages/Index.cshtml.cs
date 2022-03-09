@@ -10,25 +10,31 @@ using TodoDataLibrary.Models;
 
 namespace Todo.Web.Pages
 {
-    
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IDatabaseData _db;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         public List<BasicTodoViewModel> Todos;
+        public string UserId { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, IDatabaseData db, IMapper mapper)
+        public IndexModel(ILogger<IndexModel> logger, IDatabaseData db, IMapper mapper, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _logger = logger;
             _db = db;
             _mapper = mapper;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public void OnGet()
         {
             
-            Todos = _mapper.Map<List<BasicTodoViewModel>>(_db.GetAllTodos());
+            UserId = _userManager.GetUserId(User);
+            Todos = _mapper.Map<List<BasicTodoViewModel>>(_db.GetAllUserTodos(UserId));
         }
     }
 }
