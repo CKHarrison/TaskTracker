@@ -42,7 +42,7 @@ namespace TodoDataLibrary.Data
             string sql = @"select Id, Title, Description, StartDate, EndDate
                             from Todos
                             where Id = @Id;";
-            todo.BasicInfo = _db.LoadData<BasicTodoModel, dynamic>(sql, new { Id = id }, connectionString).ToList().First();
+            todo.BasicInfo = _db.LoadData<BasicTodoModel, dynamic>(sql, new { Id = id }, connectionString).ToList().FirstOrDefault();
 
             sql = @"select  c.*
                     from todos t

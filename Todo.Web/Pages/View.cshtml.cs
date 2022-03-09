@@ -18,11 +18,16 @@ namespace Todo.Web.Pages
             _db = db;
             _mapper = mapper;
         }
-        public void OnGet(int id)
+        public IActionResult OnGet(int id)
         {
 
             var todo = _db.GetTodo(id);
-            Todo = _mapper.Map<TodoViewModel>(todo);
+            if(todo.BasicInfo == null)
+            {
+                return RedirectToPage("/shared/_NotFound");
+            }
+             Todo = _mapper.Map<TodoViewModel>(todo);
+            return Page();
         }
     }
 }
