@@ -31,7 +31,6 @@ namespace TodoDataLibrary.Utilities
                 Password = userInfo[1],
                 Database = database.LocalPath.Trim('/'),
                 TrustServerCertificate = true,
-                IncludeErrorDetail = true,
             };
             return builder.ToString();
 
