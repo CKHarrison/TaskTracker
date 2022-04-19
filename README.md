@@ -15,6 +15,7 @@ Complete CRUD application with PostgreSQL database used to keep track of busines
   - [General Information](#general-information)
   - [Technology](#technology)
   - [Future Improvements](#future-improvements)
+  - [Sources](#sources)
   - [Contact Information](#contact-information)
 
 ---
@@ -42,6 +43,7 @@ I also would like to create team specific roles, so that upon sign up you would 
 ## Technology
 
 - C#
+- .NET Core 6
 - ASP.NET Razor Pages
 - PostgreSQL
 - Identity
@@ -59,6 +61,13 @@ I have a couple major version updates I would like to add to this project before
 1. Implement roles upon account creation so user can select from teams to work on and contribute to
 2. Add comments to each task so users can communicate with each other about a task
 3. Convert front end to React.JS application
+
+---
+
+## Sources
+
+Deployment for this project was a little tricky as I wanted to use Postresql as my database and Heroku does not natively support ASP.Net development. I used this buildpack to aide with deployement.
+[Heroku .NET Core Buildpack](https://github.com/jincod/dotnetcore-buildpack)
 
 ---
 
