@@ -1,12 +1,12 @@
 ﻿@page
 @model Todo.Web.Pages.EditModel
 @{
-    ViewData["Title"] = "Edit Todo";
+    ViewData["Title"] = "Edit Task";
 }
 <div class="text-center">
     <h1>@Model.Todo.Title</h1>
     <div class="text-center">
-    <h1>Create Todo</h1>
+    <h1>Edit Task</h1>
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input asp-for="Todo.Id" value="@Model.Todo.Id" type="hidden"/>
@@ -36,8 +36,8 @@
            <input asp-for="@Model.Todo.EndDate" class="form-control"/>
            <span asp-validation-for="@Model.Todo.EndDate" class="text-danger"></span>
        </div>
-       <a asp-page="./Index" class="btn btn-primary mt-3 p-3">Back to Todo List</a>
-       <button type="submit" class="btn btn-info mt-3 p-3">Update Todo</button>
+       <a asp-page="./Index" class="btn btn-primary mt-3 p-3">Back to Personal Task List</a>
+       <button type="submit" class="btn btn-info mt-3 p-3">Update Task</button>
     </form>
 </div>
 @section Scripts {
