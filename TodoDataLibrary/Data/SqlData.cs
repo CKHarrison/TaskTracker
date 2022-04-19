@@ -191,6 +191,10 @@ namespace TodoDataLibrary.Data
                     _db.SaveData(sql, new { Name = category.Name }, connectionString);
                     category.Id = LookupCategoryId(category.Name);
                 }
+                else
+                {
+                    category.Id = LookupCategoryId(name);
+                }
 
                 ConnectCategoryTodo(todoId, category.Id);
             }
