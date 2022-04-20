@@ -74,4 +74,4 @@ Deployment for this project was a little tricky as I wanted to use Postresql as 
 ## Contact Information
 
 If you have any questions about this project please reach out!
-[Contact Me](chris@charrison.dev)
+[Contact Me](mailto:chris@charrison.dev)
